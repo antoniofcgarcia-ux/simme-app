@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIMME Admin</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icone-192.png">
+<link rel="apple-touch-icon" href="icone-512.png">
+<meta name="theme-color" content="#f49e0d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SIMME Admin">
+<style>
+body{margin:0;font-family:system-ui,Arial,sans-serif;background:#f4f6f9;color:#1b2430;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center}
+.c{background:#fff;border-radius:18px;padding:28px 22px;max-width:360px;margin:16px;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+img{width:120px;height:120px;border-radius:26px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+h1{font-size:22px;margin:14px 0 6px}
+.b{display:block;width:100%;box-sizing:border-box;padding:15px;margin-top:12px;border:0;border-radius:12px;font-size:17px;font-weight:700;text-decoration:none;cursor:pointer}
+.p{background:#f49e0d;color:#191612}
+.s{background:#e8ebf0;color:#1b2430}
+.d{font-size:14px;color:#55606e;margin-top:14px;line-height:1.45}
+</style></head><body>
+<div class="c">
+<img src="icone-512.png" alt="SIMME Admin">
+<h1>SIMME Admin</h1>
+<div id="modoApp" style="display:none" class="d">Abrindo o app…</div>
+<div id="modoSite">
+<button id="inst" class="b p" style="display:none">📲 Instalar app</button>
+<a class="b s" href="https://claude.ai/artifact/3VsJ4CTqyebXaT6RoEwGp4#admin">Abrir sem instalar</a>
+<div class="d" id="dica">Para instalar: toque no menu <b>⋮</b> do Chrome e escolha <b>Instalar app</b> (ou <b>Adicionar à tela inicial</b>).<br>No iPhone: botão <b>Compartilhar</b> → <b>Adicionar à Tela de Início</b>.</div>
+</div>
+</div>
+<script>
+const DEST='https://claude.ai/artifact/3VsJ4CTqyebXaT6RoEwGp4#admin';
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+const app=matchMedia('(display-mode: standalone)').matches||navigator.standalone||location.search.includes('app=1');
+if(app){document.getElementById('modoSite').style.display='none';document.getElementById('modoApp').style.display='block';location.replace(DEST);}
+let ev;addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;const b=document.getElementById('inst');b.style.display='block';document.getElementById('dica').style.display='none';
+b.onclick=async()=>{ev.prompt();const r=await ev.userChoice;if(r.outcome==='accepted')b.textContent='✅ Instalado! Procure o ícone na tela inicial';}});
+</script>
+</body></html>
